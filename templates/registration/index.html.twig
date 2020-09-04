@@ -1,0 +1,57 @@
+{# templates/registration/index.html.twig #}
+{% extends 'signin.html.twig' %}
+
+{% block title %}Crear nueva cuenta{% endblock %}
+    
+{% block Signup %}
+            <!--begin::Signup-->
+            <div class="login-form login-signin">
+                <div class="text-center mb-10 mb-lg-20">
+                    <h3 class="font-size-h1">Crear nueva cuenta</h3>
+                    <p class="text-muted font-weight-bold">Ingrese todos los datos solicitados</p>
+                </div>
+              {% if error %}
+              <div class="alert alert-danger">
+                {{ error }}
+              </div>
+              {% endif %} 
+                <!--begin::Form-->           
+                {{ form_start(form, {'attr': {'id': 'kt_login_signup_form', 'novalidate': 'novalidate'}}) }}
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-4">
+                                {{ form_widget(form.firstname, { 'attr': {'class': 'form-control form-control-solid h-auto py-5 px-6', 'placeholder': 'Nombres', 'autocomplete': 'off', 'value': ''} }) }}
+                            </div>
+                            <div class="col-8">
+                                {{ form_widget(form.lastname, { 'attr': {'class': 'form-control form-control-solid h-auto py-5 px-6', 'placeholder': 'Apellidos', 'autocomplete': 'off', 'value': ''} }) }}                                
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        {{ form_widget(form.email, { 'attr': {'class': 'form-control form-control-solid h-auto py-5 px-6', 'placeholder': 'Correo eletrónico', 'autocomplete': 'off', 'value': ''} }) }}                         
+                    </div>
+                    <div class="form-group">
+                        {{ form_widget(form.password.first, { 'attr': {'class': 'form-control form-control-solid h-auto py-5 px-6', 'placeholder': 'Contraseña', 'autocomplete': 'off', 'value': ''} }) }}                        
+                    </div>
+                    <div class="form-group">
+                        {{ form_widget(form.password.second, { 'attr': {'class': 'form-control form-control-solid h-auto py-5 px-6', 'placeholder': 'Confirmar contraseña', 'autocomplete': 'off', 'value': ''} }) }}                         
+                    </div>
+                    <div class="form-group">
+                        <label class="checkbox mb-0">
+                            <input type="checkbox" name="agree"/>
+                            <span></span>&nbsp; Aceptar los&nbsp;<a href="#">términos y condiciones.</a>
+                        </label>
+                    </div>
+                    <div class="form-group d-flex flex-wrap flex-center">
+                        <button type="button" id="kt_login_signup_submit" class="btn btn-primary font-weight-bold px-9 py-4 my-3 mx-4">Submit</button>
+                        <button type="button" id="kt_login_signup_cancel" class="btn btn-light-primary font-weight-bold px-9 py-4 my-3 mx-4">Cancel</button>
+                    </div>
+                {{ form_end(form) }}
+                <!--end::Form-->
+            </div>
+            <!--end::Signup-->
+{% endblock %}
+
+{% block page_javascript %}
+    <script src="assets/js/pages/custom/login/login-signup.js"></script>
+{% endblock %}

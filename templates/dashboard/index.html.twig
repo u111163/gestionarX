@@ -1,0 +1,44 @@
+{# templates/dashboard/index.html.twig #}
+{% extends 'layout.html.twig' %}
+
+{% block title %}Panel de Control{% endblock %}
+
+{% block subheader_page_title_name%}Panel de Control{% endblock %}
+{% block subheader_page_subtitle_name%}{% endblock %}
+
+{% block page_contents %}
+
+	  <div class="row">
+	    <div class="col-md-12">
+	      <div class="card bg-light mb-3 mt-3">
+	        <div class="card-body">
+	          <div class="card-header">List of top technology companies</div>
+	          {% if app.user != null %}
+	          <table class="table">
+	            <tr>
+	              <th>Company Name</th>
+	              <th>Market Value</th>
+	            </tr>
+	            {% for key, item in companies %}
+	            <tr>
+	              <td>{{ key }}</td>
+	              <td>{{ item }}</td>
+	            </tr>
+	            {% endfor %}
+	          </table>
+	          {% endif %}
+	        </div>
+	      </div>
+	      {% if app.user == null %}
+	      <a href="{{ path('app_login') }}" class="btn btn-info">
+	        You need to login to see the list 😜😜 >></a
+	      >
+	      {% endif %}
+	    </div>
+	  </div>
+
+{% endblock %}
+
+{% block javascripts %}
+{% endblock %}
+

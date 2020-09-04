@@ -1,0 +1,78 @@
+<div class="form-group row">
+    <label class="col-2 col-form-label">EMPRESA</label>
+    <div class="col-10">
+        {{ form_widget(form.empresa_id, {
+            'attr': {
+                'class': 'form-control form-control-solid h-auto py-5 px-6',
+                'placeholder': 'Ingrese su empresa',
+                'autocomplete': 'off',
+                'value': ''
+            }
+        }) }}
+    </div>
+</div>
+<div class="form-group row">
+    <label class="col-2 col-form-label">TIPO USUARIO</label>
+    <div class="col-10">
+        {{ form_widget(form.tipo_usuario_id, {
+            'attr': {
+                'class': 'form-control form-control-solid h-auto py-5 px-6',
+                'placeholder': 'Ingrese su tipo de usuario',
+                'autocomplete': 'off',
+                'value': ''
+            }
+        }) }}
+    </div>
+</div>
+<div class="form-group row">
+    <label class="col-2 col-form-label">DNI <span class="text-danger">*</span></label>
+    <div class="col-10">
+        {{ form_widget(form.dni, {
+            'attr': {
+                'class': 'form-control form-control-solid h-auto py-5 px-6',
+                'placeholder': 'Ingrese su DNI',
+                'autocomplete': 'off',
+                'value': ''
+            }
+        }) }}
+    </div>
+</div>
+<div class="form-group row">
+    <label class="col-2 col-form-label">NOMBRES</label>
+    <div class="col-10">
+        {{ form_widget(form.nombres, {
+            'attr': {
+                'class': 'form-control form-control-solid h-auto py-5 px-6',
+                'placeholder': 'Ingrese su nombre',
+                'autocomplete': 'off',
+                'value': ''
+            }
+        }) }}
+    </div>
+</div>
+<div class="form-group row">
+    <label class="col-2 col-form-label">LOGIN</label>
+    <div class="col-10">
+        {{ form_widget(form.login, {
+            'attr': {
+                'class': 'form-control form-control-solid h-auto py-5 px-6',
+                'placeholder': 'Ingrese su login',
+                'autocomplete': 'off',
+                'value': ''
+            }
+        }) }}
+    </div>
+</div>
+<div class="form-group row">
+    <label class="col-2 col-form-label">PASSWORD</label>
+    <div class="col-10">
+        {{ form_widget(form.password, {
+            'attr': {
+                'class': 'form-control form-control-solid h-auto py-5 px-6',
+                'placeholder': 'Ingrese su password',
+                'autocomplete': 'off',
+                'value': ''
+            }
+        }) }}
+    </div>
+</div>

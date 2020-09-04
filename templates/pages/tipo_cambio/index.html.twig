@@ -1,0 +1,21 @@
+{# templates/dashboard/index.html.twig #}
+{% extends 'layout.html.twig' %}
+
+{% block title %}Panel de Control{% endblock %}
+
+{% block subheader_page_title_name%}{{ data['title'] }}{% endblock %}
+{% block subheader_page_subtitle_name%}{% endblock %}
+
+{% block page_contents %}
+
+    <div class="row">
+        <div class="col-lg-12">
+            {{ include('_partials/_components/_card.html.twig') }}
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block javascripts %}
+
+{% endblock %}

@@ -1,0 +1,26 @@
+<div class="form-group row">
+    <label class="col-2 col-form-label">CODIGO <span class="text-danger">*</span></label>
+    <div class="col-10">
+        {{ form_widget(form.codigo, {
+            'attr': {
+                'class': 'form-control form-control-solid h-auto py-5 px-6',
+                'placeholder': 'Ingrese su código',
+                'autocomplete': 'off',
+                'value': ''
+            }
+        }) }}
+    </div>
+</div>
+<div class="form-group row">
+    <label class="col-2 col-form-label">NOMBRE <span class="text-danger">*</span></label>
+    <div class="col-10">
+        {{ form_widget(form.nombre, {
+            'attr': {
+                'class': 'form-control form-control-solid h-auto py-5 px-6',
+                'placeholder': 'Ingrese nombre',
+                'autocomplete': 'off',
+                'value': ''
+            }
+        }) }}
+    </div>
+</div>

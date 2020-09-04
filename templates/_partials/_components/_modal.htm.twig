@@ -1,0 +1,29 @@
+<div class="modal fade" id="modal-{{ data['id'] }}" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdrop" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Nueva {{ data['id'] }}</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i aria-hidden="true" class="ki ki-close"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                {{ form_start(form, {'attr': {'id': 'form-' ~ data['id'], 'novalidate': 'novalidate'}}) }}
+                    <div class="form-group mb-8">
+                        <div class="alert alert-custom alert-default" role="alert">
+                            <div class="alert-icon"><i class="flaticon-warning text-primary"></i></div>
+                            <div class="alert-text">
+                                Todos los campos con <span class="text-danger">*</span> son requeridos:
+                            </div>
+                        </div>
+                    </div>
+                    {{ include('pages/'~data['id']~'/form.html.twig') }}
+                {{ form_end(form) }}
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">Cerrar</button>
+                <button id="save-{{ data['id'] }}" type="button" class="btn btn-primary font-weight-bold">Guardar Cambios</button>
+            </div>
+        </div>
+    </div>
+</div>

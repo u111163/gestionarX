@@ -1,0 +1,39 @@
+<?php
+
+namespace App\Service;
+
+use Doctrine\ORM\EntityManager;
+
+class EmpresaService extends AbstractService
+{
+
+    public function __construct(EntityManager $em, $entityName)
+    {
+        parent::__construct($em, $entityName);
+    }
+
+    public function getModel()
+    {
+        return $this->model;
+    }
+
+    public function get($id)
+    {
+        return $this->find($id);
+    }
+
+    public function getAll()
+    {
+        return $this->findAll();
+    }
+
+    public function add()
+    {
+        return $this->save();
+    }
+
+    public function delete($id)
+    {
+        return $this->delete($this->find($id));
+    }
+}
