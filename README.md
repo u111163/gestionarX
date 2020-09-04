@@ -1,0 +1,2 @@
+# gestionarX
+Software de Gestión
