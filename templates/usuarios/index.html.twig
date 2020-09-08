@@ -1,0 +1,234 @@
+{# templates/reports/index.html.twig #}
+{% extends 'layout.html.twig' %}
+
+{% block title %}Configuración{% endblock %}
+
+{% block subheader_title %}Usuarios{% endblock %}
+
+{% block subheader_subtitle %}Mantenimiento{% endblock %}
+
+{% block subheader_actions %}
+{% endblock %}
+
+{% block toolbar_actions %}
+{% endblock %}
+
+{% block toolbar_datarange %}
+{% endblock %}
+
+{% block toolbar_quickactions%}
+{% endblock %}
+
+{% block page_contents %}
+
+	<!--begin::Row-->
+	<div class="row">
+		<div class="col-lg-12">
+			<!--begin::Users-->
+			<div class="card card-custom">
+				<div class="card-header flex-wrap border-0 pt-6 pb-0">
+					<div class="card-title">
+						<h3 class="card-label">Listado de Usuarios
+						<span class="d-block text-muted pt-2 font-size-sm">Listado de Usuarios</span></h3>
+					</div>
+					<div class="card-toolbar">
+						<!--begin::Button-->
+						<a href="#" class="btn btn-success font-weight-bold">
+						<span class="svg-icon svg-icon-md">
+							<i class="far fa-plus-square"></i>
+						</span>Nuevo Usuario</a>						
+						<!--end::Button-->
+					</div>
+				</div>
+				<div class="card-body">
+					<!--begin: Search Form-->
+					<!--begin::Search Form-->
+					<div class="mb-7">
+						<div class="row align-items-center">
+							<div class="col-lg-9 col-xl-8">
+								<div class="row align-items-center">
+									<div class="col-md-4 my-2 my-md-0">
+										<div class="input-icon">
+											<input type="text" class="form-control" placeholder="Filtrar..." id="kt_datatable_search_query" />
+											<span>
+												<i class="flaticon2-search-1 text-muted"></i>
+											</span>
+										</div>
+									</div>
+									<div class="col-md-4 my-2 my-md-0">
+										<div class="d-flex align-items-center">
+											<label class="mr-3 mb-0 d-none d-md-block">Filtros:</label>
+											<select class="form-control" id="kt_datatable_search_severity">
+												<option value="">Todos</option>
+												<option value="1">Administradores</option>
+												<option value="2">Facturadores</option>
+											</select>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!--begin: Datatable-->
+					<div class="datatable datatable-bordered datatable-head-custom table-hover" id="kt_datatable"></div>
+					<!--end: Datatable-->
+				</div>
+			</div>
+			<!--end:: Users-->
+		</div>
+		<div class="col-lg-4">
+
+		</div>
+	</div>
+	<!--end::Row-->
+
+{% endblock %}
+
+{% block page_javascript %}
+	<script src="assets/js/pages/features/charts/apexcharts.js"></script>
+	<script type="text/javascript">
+
+		var datatable = $('#kt_datatable').KTDatatable({
+
+			data: {
+					type: 'remote',
+					source: {
+						read: {
+							url: '/usuarios/json/records',
+							map: function(raw) {
+							  // sample data mapping
+							  var dataSet = raw;
+							  if (typeof raw.data !== 'undefined') {
+								dataSet = raw.data;
+							  }
+							  return dataSet;
+							},						
+						},
+					},
+					pageSize: 10,
+					serverPaging: false,
+	            },
+	            // column sorting
+	            sortable: true,
+	            pagination: true,
+            	// search
+	            search: {
+	                input: $('#kt_datatable_search_query'),
+	                key: 'generalSearch'
+	            },	                      
+	            // layout definition
+	            layout: {
+	                scroll: true,
+	                footer: false,
+	                spinner: {
+	                    message: 'Cargando...',
+	                }                
+	            },
+	            toolbar: {
+	            	layout: ['info', 'pagination'],
+	            },
+	            // columns definition
+	            columns: [
+		            {
+                        field: 'firstname',
+                        width: 150,
+                        title: 'Nombres',
+                    },
+		            {
+		                field: 'lastname',
+		                width: 100,
+		                title: 'Apellidos',
+		            },
+		            {
+                        field: 'email',
+                        width: 150,
+                        title: 'Correo Electrónico',
+						template: function(row) {
+							if (row.email === undefined || row.email === null || row.email==='') {
+
+							    row.url ='';
+							} else {
+								row.url = '<a mailto="' + row.email + '" target="_blanck">' + row.email + '</a>';
+							}
+                            return row.url;
+                            },                        
+                    },
+		            {
+		                field: 'roles',
+		                title: 'Roles',	                
+		            },            
+					{
+					    field: 'active',
+					    title: 'Estado',
+					    autoHide: false,
+					    // callback function support for column rendering
+					    template: function(row) {
+					        var status = {
+					            0: {
+					                'title': 'Crítico',
+					                'state': 'danger'
+					            },
+					            1: {
+					                'title': 'Importante',
+					                'state': 'warning'
+					            },			            					            
+					        };
+					        return 	'<span class="switch switch-sm switch-icon">\
+					        		<label>\
+					        		<input type="checkbox" checked="checked" name="select">\
+					        		<span></span>\
+					        		</label>\
+					        		</span>';
+					    },
+					},		                               
+                    {
+                        field: 'id',
+                        title: 'Acciones',
+                        sortable: false,
+                        width: 60,
+                        overflow: 'visible',
+                        autoHide: false,
+                        template: function(row) {
+                            return '\
+									<a href="' + row.id + '" class="btn btn-clean btn-hover-light-primary btn-sm btn-icon">\
+									<i class="far fa-edit"></i>\
+									</a>\
+									<a href="' + row.id + '" class="btn btn-clean btn-hover-light-primary btn-sm btn-icon">\
+									<i class="far fa-trash-alt"></i>\
+									</a>\
+                            ';
+                            },
+                    },
+                      
+	            ],
+	            translate: {
+	                records: {
+	                    processing: 'Cargando...',
+	                    noRecords: 'No se encontraron registros',
+	                },
+	                toolbar: {
+	                    pagination: {
+	                        items: {
+	                            default: {
+	                                first: 'Primero',
+	                                prev: 'Anterior',
+	                                next: 'Siguiente',
+	                                last: 'Último',
+	                                more: 'Más páginas',
+	                                input: 'Número de página',
+	                                select: 'Seleccionar tamaño de página',
+	                            },
+	                            info: 'Viendo {{ '{{start}}'}} - {{'{{end}}'}} de {{'{{total}}'}} registros',
+	                        },
+	                    },
+	                },
+	            },	            
+		});
+
+        $('#kt_datatable_search_severity').on('change', function() {
+            datatable.search($(this).val().toLowerCase(), 'severity');
+        });
+
+	</script>	
+{% endblock %}
+
