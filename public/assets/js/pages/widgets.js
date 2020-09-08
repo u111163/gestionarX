@@ -3608,8 +3608,8 @@ var KTWidgets = function () {
             return;
         }
 
-        var strokeColor = KTUtil.colorDarken(KTApp.getSettings()['colors']['theme']['base']['danger'], 20);
-        var fillColor = KTUtil.colorDarken(KTApp.getSettings()['colors']['theme']['base']['danger'], 10);
+        var strokeColor = KTUtil.changeColor(KTApp.getSettings()['colors']['theme']['base']['danger']);
+        var fillColor = KTUtil.changeColor(KTApp.getSettings()['colors']['theme']['base']['danger']);
 
         var options = {
             series: [{
@@ -4142,7 +4142,7 @@ var KTWidgets = function () {
                         }
                     },
                     track: {
-                        background: KTUtil.colorLighten(KTApp.getSettings()['colors']['theme']['base']['primary'], 7),
+                        background: KTUtil.changeColor(KTApp.getSettings()['colors']['theme']['base']['primary'], -7),
                         strokeWidth: '100%'
                     }
                 }
@@ -4673,6 +4673,7 @@ var KTWidgets = function () {
 
             // Form Widgets
             _initPriceSlider('kt_price_slider');
+
             // Forms widgets
             _initFormsWidget1();
             _initFormsWidget2();

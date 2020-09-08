@@ -2,46 +2,49 @@
 
 {% block content %}
 
-
-	<!--begin::Subheader-->
 	{% block subheader %}
-		<div class="subheader py-2 py-lg-4  subheader-solid " id="kt_subheader">
-		    <div class=" container-fluid  d-flex align-items-center justify-content-between flex-wrap flex-sm-nowrap">
-		        <!--begin::Info-->
-		        <div class="d-flex align-items-center flex-wrap mr-2">
-		            <!--begin::Page Title-->
-		            {% block subheader_page_title %}
-		            	<h5 class="text-dark font-weight-bold mt-2 mb-2 mr-5">{% block subheader_page_title_name %}subheader_page_title_name{% endblock %}</h5>
-		            {% endblock %}
-		            <!--end::Page Title-->
-
-		            <!--begin::Page Sub title-->
-		            {% block subheader_page_subtitle %}
-			            <div class="subheader-separator subheader-separator-ver mt-2 mb-2 mr-4 bg-gray-200"></div>
-			            <span class="text-muted font-weight-bold mr-4">{% block subheader_page_subtitle_name %}subheader_page_subtitle_name{% endblock %}</span>
-		            {% endblock %} 
-		            <!--end::Page Title-->
-
-		            <!--begin::Actions-->
-		            {% block subheader_actions %}
-		            {% endblock %} 
-		            <!--end::Actions-->
-		        </div>
-		        <!--end::Info-->
-
-		        <!--begin::Toolbar-->
-	            {% block toolbar%}
-	            {% endblock %} 
-		        <!--end::Toolbar-->
-		    </div>
+	<!--begin::Subheader-->
+	<div class="subheader py-2 py-lg-4 subheader-solid" id="kt_subheader">
+		<div class="container-fluid d-flex align-items-center justify-content-between flex-wrap flex-sm-nowrap">
+			<!--begin::Info-->
+			<div class="d-flex align-items-center flex-wrap mr-2">
+				<!--begin::Page Title-->
+				<h5 class="text-dark font-weight-bold mt-2 mb-2 mr-5">{% block subheader_title %}subheader_title{% endblock %}</h5>
+				<!--end::Page Title-->
+				<div class="subheader-separator subheader-separator-ver mt-2 mb-2 mr-4 bg-gray-200"></div>
+				<span class="text-muted font-weight-bold mr-4">{% block subheader_subtitle %}subheader_subtitle{% endblock %}</span>
+				<!--begin::Actions-->
+				{% block subheader_actions %}
+				<a href="#" class="btn btn-light-warning font-weight-bolder btn-sm">Add New</a>
+				{% endblock %}
+				<!--end::Actions-->
+			</div>
+			<!--end::Info-->
+			<!--begin::Toolbar-->
+			<div class="d-flex align-items-center">
+				{% block toolbar_actions %}
+				<!--begin::Actions-->
+				<!--end::Actions-->
+				{% endblock %}
+				{% block toolbar_datarange %}
+				<!--begin::Daterange-->
+				<!--end::Daterange-->
+				{% endblock %}
+				<!--begin::Dropdowns-->
+				{% block toolbar_quickactions%}
+				<!--end::Dropdowns-->
+				{% endblock %}
+			</div>
+			<!--end::Toolbar-->
 		</div>
-		<!--end::Subheader-->
+	</div>
+	<!--end::Subheader-->
 	{% endblock %}
 
 	<!--begin::Entry-->
 	<div class="d-flex flex-column-fluid">
 		<!--begin::Container-->
-		<div class=" container ">
+		<div class="container-fluid">
 			<!--begin::Dashboard-->
     		{% block page_contents %}{% endblock %}
 			<!--end::Dashboard-->

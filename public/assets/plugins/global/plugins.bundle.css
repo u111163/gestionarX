@@ -104,7 +104,7 @@
 
 /*
   	Keenthemes Icons Font: Ki
-  	Creation date: 25/01/2020
+  	Creation date: 03/08/2020
  */
 @font-face {
   font-family: "Ki";
@@ -329,6 +329,9 @@
 
 .ki-clock:before {
   content: "\f142"; }
+
+.ki-dots:before {
+  content: "\f143"; }
 
 /**
  * FormValidation (https://formvalidation.io)
@@ -4126,7 +4129,7 @@ Build date: 2019-12-19 16:51:02
   color: silver;
   font-size: 11px; }
 
-/*! nouislider - 14.6.0 - 6/27/2020 */
+/*! nouislider - 14.6.1 - 8/17/2020 */
 /* Functional styling;
  * These styles are required for noUiSlider to function.
  * You don't need to change these rules to apply your design.
@@ -10884,10 +10887,10 @@ button.toast-close-button {
   stroke: #333;
   rx: 2; }
 
-.apexcharts-canvas.apexcharts-zoomable .hovering-zoom {
+.apexcharts-svg.apexcharts-zoomable.hovering-zoom {
   cursor: crosshair; }
 
-.apexcharts-canvas.apexcharts-zoomable .hovering-pan {
+.apexcharts-svg.apexcharts-zoomable.hovering-pan {
   cursor: move; }
 
 .apexcharts-zoom-icon,

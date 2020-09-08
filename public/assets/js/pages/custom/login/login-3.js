@@ -220,7 +220,11 @@ var KTLogin = function() {
 				},
 				plugins: {
 					trigger: new FormValidation.plugins.Trigger(),
-					bootstrap: new FormValidation.plugins.Bootstrap()
+					// Bootstrap Framework Integration
+					bootstrap: new FormValidation.plugins.Bootstrap({
+						//eleInvalidClass: '',
+						eleValidClass: '',
+					})
 				}
 			}
 		));
@@ -268,7 +272,11 @@ var KTLogin = function() {
 				},
 				plugins: {
 					trigger: new FormValidation.plugins.Trigger(),
-					bootstrap: new FormValidation.plugins.Bootstrap()
+					// Bootstrap Framework Integration
+					bootstrap: new FormValidation.plugins.Bootstrap({
+						//eleInvalidClass: '',
+						eleValidClass: '',
+					})
 				}
 			}
 		));
@@ -302,7 +310,11 @@ var KTLogin = function() {
 				},
 				plugins: {
 					trigger: new FormValidation.plugins.Trigger(),
-					bootstrap: new FormValidation.plugins.Bootstrap()
+					// Bootstrap Framework Integration
+					bootstrap: new FormValidation.plugins.Bootstrap({
+						//eleInvalidClass: '',
+						eleValidClass: '',
+					})
 				}
 			}
 		));
@@ -356,7 +368,11 @@ var KTLogin = function() {
 				},
 				plugins: {
 					trigger: new FormValidation.plugins.Trigger(),
-					bootstrap: new FormValidation.plugins.Bootstrap()
+					// Bootstrap Framework Integration
+					bootstrap: new FormValidation.plugins.Bootstrap({
+						//eleInvalidClass: '',
+						eleValidClass: '',
+					})
 				}
 			}
 		));
@@ -364,36 +380,76 @@ var KTLogin = function() {
 		// Initialize form wizard
 		wizardObj = new KTWizard(wizardEl, {
 			startStep: 1, // initial active step number
-			clickableSteps: false // to make steps clickable this set value true and add data-wizard-clickable="true" in HTML for class="wizard" element
+			clickableSteps: false  // allow step clicking
 		});
 
 		// Validation before going to next page
-		wizardObj.on('beforeNext', function (wizard) {
-			validations[wizard.getStep() - 1].validate().then(function (status) {
-				if (status == 'Valid') {
-					wizardObj.goNext();
-					KTUtil.scrollTop();
-				} else {
+		wizardObj.on('change', function (wizard) {
+			if (wizard.getStep() > wizard.getNewStep()) {
+				return; // Skip if stepped back
+			}
+
+			// Validate form before change wizard step
+			var validator = validations[wizard.getStep() - 1]; // get validator for currnt step
+
+			if (validator) {
+				validator.validate().then(function (status) {
+					if (status == 'Valid') {
+						wizard.goTo(wizard.getNewStep());
+
+						KTUtil.scrollTop();
+					} else {
+						Swal.fire({
+							text: "Sorry, looks like there are some errors detected, please try again.",
+							icon: "error",
+							buttonsStyling: false,
+							confirmButtonText: "Ok, got it!",
+							customClass: {
+								confirmButton: "btn font-weight-bold btn-light"
+							}
+						}).then(function () {
+							KTUtil.scrollTop();
+						});
+					}
+				});
+			}
+
+			return false;  // Do not change wizard step, further action will be handled by he validator
+		});
+
+		// Change event
+		wizardObj.on('changed', function (wizard) {
+			KTUtil.scrollTop();
+		});
+
+		// Submit event
+		wizardObj.on('submit', function (wizard) {
+			Swal.fire({
+				text: "All is good! Please confirm the form submission.",
+				icon: "success",
+				showCancelButton: true,
+				buttonsStyling: false,
+				confirmButtonText: "Yes, submit!",
+				cancelButtonText: "No, cancel",
+				customClass: {
+					confirmButton: "btn font-weight-bold btn-primary",
+					cancelButton: "btn font-weight-bold btn-default"
+				}
+			}).then(function (result) {
+				if (result.value) {
+					form.submit(); // Submit form
+				} else if (result.dismiss === 'cancel') {
 					Swal.fire({
-						text: "Sorry, looks like there are some errors detected, please try again.",
+						text: "Your form has not been submitted!.",
 						icon: "error",
 						buttonsStyling: false,
 						confirmButtonText: "Ok, got it!",
 						customClass: {
-							confirmButton: "btn font-weight-bold btn-light-primary"
+							confirmButton: "btn font-weight-bold btn-primary",
 						}
-					}).then(function () {
-						KTUtil.scrollTop();
 					});
 				}
 			});
-
-			wizardObj.stop();  // Don't go to the next step
-		});
-
-		// Change event
-		wizardObj.on('change', function (wizard) {
-			KTUtil.scrollTop();
 		});
     }
 

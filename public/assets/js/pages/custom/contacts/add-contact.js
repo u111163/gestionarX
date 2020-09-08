@@ -5,52 +5,89 @@ var KTContactsAdd = function () {
 	// Base elements
 	var _wizardEl;
 	var _formEl;
-	var _wizard;
+	var _wizardObj;
 	var _avatar;
 	var _validations = [];
 
 	// Private functions
-	var initWizard = function () {
+	var _initWizard = function () {
 		// Initialize form wizard
-		_wizard = new KTWizard(_wizardEl, {
+		_wizardObj = new KTWizard(_wizardEl, {
 			startStep: 1, // initial active step number
-			clickableSteps: true  // allow step clicking
+			clickableSteps: false  // allow step clicking
 		});
 
 		// Validation before going to next page
-		_wizard.on('beforeNext', function (wizard) {
-			// Don't go to the next step yet
-			_wizard.stop();
+		_wizardObj.on('change', function (wizard) {
+			if (wizard.getStep() > wizard.getNewStep()) {
+				return; // Skip if stepped back
+			}
 
-			// Validate form
+			// Validate form before change wizard step
 			var validator = _validations[wizard.getStep() - 1]; // get validator for currnt step
-			validator.validate().then(function (status) {
-				if (status == 'Valid') {
-					_wizard.goNext();
-					KTUtil.scrollTop();
-				} else {
+
+			if (validator) {
+				validator.validate().then(function (status) {
+					if (status == 'Valid') {
+						wizard.goTo(wizard.getNewStep());
+
+						KTUtil.scrollTop();
+					} else {
+						Swal.fire({
+							text: "Sorry, looks like there are some errors detected, please try again.",
+							icon: "error",
+							buttonsStyling: false,
+							confirmButtonText: "Ok, got it!",
+							customClass: {
+								confirmButton: "btn font-weight-bold btn-light"
+							}
+						}).then(function () {
+							KTUtil.scrollTop();
+						});
+					}
+				});
+			}
+
+			return false;  // Do not change wizard step, further action will be handled by he validator
+		});
+
+		// Change event
+		_wizardObj.on('changed', function (wizard) {
+			KTUtil.scrollTop();
+		});
+
+		// Submit event
+		_wizardObj.on('submit', function (wizard) {
+			Swal.fire({
+				text: "All is good! Please confirm the form submission.",
+				icon: "success",
+				showCancelButton: true,
+				buttonsStyling: false,
+				confirmButtonText: "Yes, submit!",
+				cancelButtonText: "No, cancel",
+				customClass: {
+					confirmButton: "btn font-weight-bold btn-primary",
+					cancelButton: "btn font-weight-bold btn-default"
+				}
+			}).then(function (result) {
+				if (result.value) {
+					_formEl.submit(); // Submit form
+				} else if (result.dismiss === 'cancel') {
 					Swal.fire({
-						text: "Sorry, looks like there are some errors detected, please try again.",
+						text: "Your form has not been submitted!.",
 						icon: "error",
 						buttonsStyling: false,
 						confirmButtonText: "Ok, got it!",
 						customClass: {
-							confirmButton: "btn font-weight-bold btn-light"
+							confirmButton: "btn font-weight-bold btn-primary",
 						}
-					}).then(function () {
-						KTUtil.scrollTop();
 					});
 				}
 			});
 		});
-
-		// Change Event
-		_wizard.on('change', function (wizard) {
-			KTUtil.scrollTop();
-		});
 	}
 
-	var initValidation = function () {
+	var _initValidation = function () {
 		// Init form validation rules. For more info check the FormValidation plugin's official documentation:https://formvalidation.io/
 
 		// Step 1
@@ -110,7 +147,11 @@ var KTContactsAdd = function () {
 				},
 				plugins: {
 					trigger: new FormValidation.plugins.Trigger(),
-					bootstrap: new FormValidation.plugins.Bootstrap()
+					// Bootstrap Framework Integration
+					bootstrap: new FormValidation.plugins.Bootstrap({
+						//eleInvalidClass: '',
+						eleValidClass: '',
+					})
 				}
 			}
 		));
@@ -146,7 +187,11 @@ var KTContactsAdd = function () {
 				},
 				plugins: {
 					trigger: new FormValidation.plugins.Trigger(),
-					bootstrap: new FormValidation.plugins.Bootstrap()
+					// Bootstrap Framework Integration
+					bootstrap: new FormValidation.plugins.Bootstrap({
+						//eleInvalidClass: '',
+						eleValidClass: '',
+					})
 				}
 			}
 		));
@@ -194,13 +239,17 @@ var KTContactsAdd = function () {
 				},
 				plugins: {
 					trigger: new FormValidation.plugins.Trigger(),
-					bootstrap: new FormValidation.plugins.Bootstrap()
+					// Bootstrap Framework Integration
+					bootstrap: new FormValidation.plugins.Bootstrap({
+						//eleInvalidClass: '',
+						eleValidClass: '',
+					})
 				}
 			}
 		));
 	}
 
-	var initAvatar = function () {
+	var _initAvatar = function () {
 		_avatar = new KTImageInput('kt_contact_add_avatar');
 	}
 
@@ -210,9 +259,9 @@ var KTContactsAdd = function () {
 			_wizardEl = KTUtil.getById('kt_contact_add');
 			_formEl = KTUtil.getById('kt_contact_add_form');
 
-			initWizard();
-			initValidation();
-			initAvatar();
+			_initWizard();
+			_initValidation();
+			_initAvatar();
 		}
 	};
 }();

@@ -1,44 +1,129 @@
-{# templates/dashboard/index.html.twig #}
+{# templates/reports/index.html.twig #}
 {% extends 'layout.html.twig' %}
 
 {% block title %}Panel de Control{% endblock %}
 
-{% block subheader_page_title_name%}Panel de Control{% endblock %}
-{% block subheader_page_subtitle_name%}{% endblock %}
+{% block subheader_title %}Panel de Control{% endblock %}
+
+{% block subheader_subtitle %}Resúmen de la empresa{% endblock %}
+
+{% block subheader_actions %}
+{% endblock %}
+
+{% block toolbar_actions %}
+{% endblock %}
+
+{% block toolbar_datarange %}
+{% endblock %}
+
+{% block toolbar_quickactions%}
+{% endblock %}
 
 {% block page_contents %}
 
-	  <div class="row">
-	    <div class="col-md-12">
-	      <div class="card bg-light mb-3 mt-3">
-	        <div class="card-body">
-	          <div class="card-header">List of top technology companies</div>
-	          {% if app.user != null %}
-	          <table class="table">
-	            <tr>
-	              <th>Company Name</th>
-	              <th>Market Value</th>
-	            </tr>
-	            {% for key, item in companies %}
-	            <tr>
-	              <td>{{ key }}</td>
-	              <td>{{ item }}</td>
-	            </tr>
-	            {% endfor %}
-	          </table>
-	          {% endif %}
-	        </div>
-	      </div>
-	      {% if app.user == null %}
-	      <a href="{{ path('app_login') }}" class="btn btn-info">
-	        You need to login to see the list 😜😜 >></a
-	      >
-	      {% endif %}
-	    </div>
-	  </div>
+<div class="row">
+	<div class="col-xl-12">
+		<div>
+			<div>
+				<div class="row">
+				<div class="col-xl-4">
+					<div class="row">
+						<div class="col-xl-6">
+							<div class="card card-custom gutter-b">
+								<div class="card-body">
+									<span class="nav-icon py-2 w-auto">
+										 <i class="fas fa-users icon-2x text-primary mr-5 "></i>
+									</span>
+								    <div class="text-dark font-weight-bolder font-size-h2 mt-3">11</div>
+								    <span class="text-muted text-hover-primary font-weight-bold font-size-lg mt-1">Clientes</span>
+								</div>
+							</div>							
+						</div>
+						<div class="col-xl-6">
+							<div class="card card-custom gutter-b">
+								<div class="card-body">
+									<span class="nav-icon py-2 w-auto">
+										 <i class="fas fa-file-invoice-dollar icon-2x text-primary mr-5 "></i>
+									</span>
+								    <div class="text-dark font-weight-bolder font-size-h2 mt-3">11</div>
+								    <span class="text-muted text-hover-primary font-weight-bold font-size-lg mt-1">Facturas</span>
+								</div>
+							</div>							
+						</div>			
+					</div>
+					<div class="row">
+						<div class="col-xl-6">
+							<div class="card card-custom gutter-b">
+								<div class="card-body">
+									<span class="nav-icon py-2 w-auto">
+										 <i class="fas fa-file-contract icon-2x text-primary mr-5 "></i>
+									</span>
+								    <div class="text-dark font-weight-bolder font-size-h2 mt-3">20</div>
+								    <span class="text-muted text-hover-primary font-weight-bold font-size-lg mt-1">Presupuestos</span>
+								</div>
+							</div>
+						</div>
+						<div class="col-xl-6">
+							<!--begin::Mixed Widget 14-->
+							<div class="card card-custom card-stretch gutter-b">
+							<!--begin::Body-->
+								<div class="card-body">
+									<span class="nav-icon py-2 w-auto">
+										 <i class="fas fa-hand-holding-medical icon-2x text-primary mr-5 "></i>
+									</span>
+								    <div class="text-dark font-weight-bolder font-size-h2 mt-3">5</div>
+								    <span class="text-muted text-hover-primary font-weight-bold font-size-lg mt-1">Notas de Débito</span>
+								</div>
+							<!--end::Body-->
+							</div>
+							<!--end::Mixed Widget 14-->
+						</div>	
+					</div>
+				</div>			
+				<div class="col-xl-4">
+					<div class="card card-custom card-stretch gutter-b">
+						<!--begin::Header-->
+						<div class="card-header border-0 pt-5">
+							<h3 class="card-title align-items-start flex-column">
+								<span class="card-label font-weight-bolder text-dark">Estadísticas de ventas</span>
+								<span class="text-muted mt-3 font-weight-bold font-size-sm">Últimos 30 días</span>
+							</h3>
+						</div>
+						<!--end::Header-->
+						<!--begin::Body-->
+						<div class="card-body pt-8">
+							<div id="top_vendor_with_vulnerabilities" class="d-flex justify-content-center"></div>						
+						</div>
+						<!--end::Body-->										
+					</div>	
+				</div>	
+				<div class="col-xl-4">
+					<div class="card card-custom card-stretch gutter-b">
+						<!--begin::Header-->
+						<div class="card-header border-0 pt-5">
+							<h3 class="card-title align-items-start flex-column">
+								<span class="card-label font-weight-bolder text-dark">Presupuestos enviados</span>
+								<span class="text-muted mt-3 font-weight-bold font-size-sm">Últimos 30 días</span>
+							</h3>
+						</div>
+						<!--end::Header-->
+						<!--begin::Body-->
+						<div class="card-body pt-8">
+							<div id="top_vendor_with_vulnerabilities_by_severity" class="d-flex justify-content-center"></div>
+						</div>
+						<!--end::Body-->										
+					</div>
+				</div>
+			</div>
+			</div>
+		</div>
+	</div>
+	
+</div>
 
 {% endblock %}
 
-{% block javascripts %}
+{% block page_javascript %}
+
 {% endblock %}
 

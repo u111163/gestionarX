@@ -1,6 +1,6 @@
 /*
   	Keenthemes Icons Font: Ki
-  	Creation date: 25/01/2020
+  	Creation date: 03/08/2020
  */
 
 @font-face {
@@ -99,3 +99,4 @@
 .ki-calendar:before { content: "\f140"; }
 .ki-calendar-today:before { content: "\f141"; }
 .ki-clock:before { content: "\f142"; }
+.ki-dots:before { content: "\f143"; }

@@ -3,8 +3,8 @@
 
 namespace App\Controller;
 
-use App\Entity\User;
-use App\Form\UserType;
+use App\Entity\Users;
+use App\Form\UsersType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -24,10 +24,14 @@ class RegistrationController extends AbstractController
      */
     public function index(Request $request)
     {
-        $error  = false;
-        $user   = new User();
 
-        $form = $this->createForm(UserType::class, $user);
+        // Quitar esta línea si se permitirá crear usuarios sin autenticar
+        //$this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+
+        $error  = false;
+        $user   = new Users();
+
+        $form = $this->createForm(UsersType::class, $user);
 
         $form->handleRequest($request);
 
@@ -41,7 +45,7 @@ class RegistrationController extends AbstractController
 
             // Verifiy if the user exist
             $em = $this->getDoctrine()->getManager();
-            $result = $em->getRepository(User::class)->findOneBy(['email' => $user->getEmail()]);
+            $result = $em->getRepository(Users::class)->findOneBy(['email' => $user->getEmail()]);
 
             if (!$result) {
 
@@ -59,7 +63,7 @@ class RegistrationController extends AbstractController
 
         }
 
-        return $this->render('registration/index.html.twig', [
+         return $this->render('registration/index.html.twig', [
             'form' => $form->createView(), 'error' => $error
         ]);
     }

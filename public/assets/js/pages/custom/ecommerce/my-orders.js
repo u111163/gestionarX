@@ -1,7 +1,7 @@
 "use strict";
 // Class definition
 
-var KTDatatableColumnWidthDemo = function () {
+var KTEcommerceMyOrders = function () {
     // Private functions
     var demo = function () {
         var datatable = $('#kt_datatable').KTDatatable({
@@ -68,8 +68,8 @@ var KTDatatableColumnWidthDemo = function () {
                         "Mobile Device",
                         "Running Shoes",
                         "Bicycle",
-                        "Fashion", 
-                        "Mobile Device"                 
+                        "Fashion",
+                        "Mobile Device"
                     ]
                     var output = '<div class="d-flex align-items-center">\
                         <div class="symbol symbol-50 symbol-sm flex-shrink-0">\
@@ -259,5 +259,5 @@ var KTDatatableColumnWidthDemo = function () {
 }();
 
 jQuery(document).ready(function () {
-    KTDatatableColumnWidthDemo.init();
+    KTEcommerceMyOrders.init();
 });

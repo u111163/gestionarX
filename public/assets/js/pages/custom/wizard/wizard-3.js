@@ -5,51 +5,84 @@ var KTWizard3 = function () {
 	// Base elements
 	var _wizardEl;
 	var _formEl;
-	var _wizard;
+	var _wizardObj;
 	var _validations = [];
 
 	// Private functions
-	var initWizard = function () {
+	var _initWizard = function () {
 		// Initialize form wizard
-		_wizard = new KTWizard(_wizardEl, {
+		_wizardObj = new KTWizard(_wizardEl, {
 			startStep: 1, // initial active step number
 			clickableSteps: true  // allow step clicking
 		});
 
 		// Validation before going to next page
-		_wizard.on('beforeNext', function (wizard) {
-			// Don't go to the next step yet
-			_wizard.stop();
+		_wizardObj.on('change', function (wizard) {
+			if (wizard.getStep() > wizard.getNewStep()) {
+				return; // Skip if stepped back
+			}
 
-			// Validate form
+			// Validate form before change wizard step
 			var validator = _validations[wizard.getStep() - 1]; // get validator for currnt step
-			validator.validate().then(function (status) {
-				if (status == 'Valid') {
-					_wizard.goNext();
-					KTUtil.scrollTop();
-				} else {
-					Swal.fire({
-						text: "Sorry, looks like there are some errors detected, please try again.",
-						icon: "error",
-						buttonsStyling: false,
-						confirmButtonText: "Ok, got it!",
-						customClass: {
-							confirmButton: "btn font-weight-bold btn-light"
-						}
-					}).then(function () {
+
+			if (validator) {
+				validator.validate().then(function (status) {
+					if (status == 'Valid') {
+						wizard.goTo(wizard.getNewStep());
+
 						KTUtil.scrollTop();
-					});
-				}
-			});
+					} else {
+						Swal.fire({
+							text: "Sorry, looks like there are some errors detected, please try again.",
+							icon: "error",
+							buttonsStyling: false,
+							confirmButtonText: "Ok, got it!",
+							customClass: {
+								confirmButton: "btn font-weight-bold btn-light"
+							}
+						}).then(function () {
+							KTUtil.scrollTop();
+						});
+					}
+				});
+			}
+
+			return false;  // Do not change wizard step, further action will be handled by he validator
 		});
 
-		// Change event
-		_wizard.on('change', function (wizard) {
+		// Changed event
+		_wizardObj.on('changed', function (wizard) {
 			KTUtil.scrollTop();
+		});
+
+		// Submit event
+		_wizardObj.on('submit', function (wizard) {
+			// Validate form before submit
+			var validator = _validations[wizard.getStep() - 1]; // get validator for currnt step
+
+			if (validator) {
+				validator.validate().then(function (status) {
+					if (status == 'Valid') {
+						_formEl.submit(); // submit form
+					} else {
+						Swal.fire({
+							text: "Sorry, looks like there are some errors detected, please try again.",
+							icon: "error",
+							buttonsStyling: false,
+							confirmButtonText: "Ok, got it!",
+							customClass: {
+								confirmButton: "btn font-weight-bold btn-light"
+							}
+						}).then(function () {
+							KTUtil.scrollTop();
+						});
+					}
+				});
+			}
 		});
 	}
 
-	var initValidation = function () {
+	var _initValidation = function () {
 		// Init form validation rules. For more info check the FormValidation plugin's official documentation:https://formvalidation.io/
 		// Step 1
 		_validations.push(FormValidation.formValidation(
@@ -94,7 +127,11 @@ var KTWizard3 = function () {
 				},
 				plugins: {
 					trigger: new FormValidation.plugins.Trigger(),
-					bootstrap: new FormValidation.plugins.Bootstrap()
+					// Bootstrap Framework Integration
+					bootstrap: new FormValidation.plugins.Bootstrap({
+						//eleInvalidClass: '',
+						eleValidClass: '',
+					})
 				}
 			}
 		));
@@ -154,7 +191,11 @@ var KTWizard3 = function () {
 				},
 				plugins: {
 					trigger: new FormValidation.plugins.Trigger(),
-					bootstrap: new FormValidation.plugins.Bootstrap()
+					// Bootstrap Framework Integration
+					bootstrap: new FormValidation.plugins.Bootstrap({
+						//eleInvalidClass: '',
+						eleValidClass: '',
+					})
 				}
 			}
 		));
@@ -188,7 +229,11 @@ var KTWizard3 = function () {
 				},
 				plugins: {
 					trigger: new FormValidation.plugins.Trigger(),
-					bootstrap: new FormValidation.plugins.Bootstrap()
+					// Bootstrap Framework Integration
+					bootstrap: new FormValidation.plugins.Bootstrap({
+						//eleInvalidClass: '',
+						eleValidClass: '',
+					})
 				}
 			}
 		));
@@ -236,7 +281,12 @@ var KTWizard3 = function () {
 				},
 				plugins: {
 					trigger: new FormValidation.plugins.Trigger(),
-					bootstrap: new FormValidation.plugins.Bootstrap()
+					// Validate fields when clicking the Submit button
+					// Bootstrap Framework Integration
+					bootstrap: new FormValidation.plugins.Bootstrap({
+						//eleInvalidClass: '',
+						eleValidClass: '',
+					})
 				}
 			}
 		));
@@ -248,8 +298,8 @@ var KTWizard3 = function () {
 			_wizardEl = KTUtil.getById('kt_wizard_v3');
 			_formEl = KTUtil.getById('kt_form');
 
-			initWizard();
-			initValidation();
+			_initWizard();
+			_initValidation();
 		}
 	};
 }();

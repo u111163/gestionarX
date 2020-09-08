@@ -42,8 +42,8 @@ var KTLogin = function() {
 				},
 				plugins: {
                     trigger: new FormValidation.plugins.Trigger(),
-                    //submitButton: new FormValidation.plugins.SubmitButton(),
-                    defaultSubmit: new FormValidation.plugins.DefaultSubmit(), // Uncomment this line to enable normal button submit after form validation
+                    submitButton: new FormValidation.plugins.SubmitButton(),
+                    //defaultSubmit: new FormValidation.plugins.DefaultSubmit(), // Uncomment this line to enable normal button submit after form validation
 					bootstrap: new FormValidation.plugins.Bootstrap()
 				}
 			}
@@ -103,20 +103,13 @@ var KTLogin = function() {
 			form,
 			{
 				fields: {
-					firstname: {
+					fullname: {
 						validators: {
 							notEmpty: {
-								message: 'Firstname is required'
+								message: 'Username is required'
 							}
 						}
 					},
-                    lastname: {
-                        validators: {
-                            notEmpty: {
-                                message: 'Lastname is required'
-                            }
-                        }
-                    },                    
 					email: {
                         validators: {
 							notEmpty: {
@@ -156,10 +149,8 @@ var KTLogin = function() {
                     },
 				},
 				plugins: {
-                    trigger: new FormValidation.plugins.Trigger(),
-                    submitButton: new FormValidation.plugins.SubmitButton(),
-                    defaultSubmit: new FormValidation.plugins.DefaultSubmit(), // Uncomment this line to enable normal button submit after form validation
-                    bootstrap: new FormValidation.plugins.Bootstrap()                    
+					trigger: new FormValidation.plugins.Trigger(),
+					bootstrap: new FormValidation.plugins.Bootstrap()
 				}
 			}
 		);
@@ -170,10 +161,10 @@ var KTLogin = function() {
             validation.validate().then(function(status) {
 		        if (status == 'Valid') {
                     swal.fire({
-		                text: "Datos ingresados correctamente.",
+		                text: "All is cool! Now you submit this form",
 		                icon: "success",
 		                buttonsStyling: false,
-		                confirmButtonText: "Ok, enviar!",
+		                confirmButtonText: "Ok, got it!",
                         customClass: {
     						confirmButton: "btn font-weight-bold btn-light-primary"
     					}
@@ -182,10 +173,10 @@ var KTLogin = function() {
 					});
 				} else {
 					swal.fire({
-		                text: "Se ha detectado algún error. Verifique los datos ingresados.",
+		                text: "Sorry, looks like there are some errors detected, please try again.",
 		                icon: "error",
 		                buttonsStyling: false,
-		                confirmButtonText: "Ok, verificar!",
+		                confirmButtonText: "Ok, got it!",
                         customClass: {
     						confirmButton: "btn font-weight-bold btn-light-primary"
     					}
